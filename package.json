@@ -27,5 +27,13 @@
     "morgan": "^1.8.1",
     "q": "^1.4.1",
     "watson-developer-cloud": "^2.25.1"
+  },
+  "devDependencies": {
+    "cz-conventional-changelog": "^2.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
