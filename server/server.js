@@ -10,9 +10,8 @@ var envVars = require('../env.json');
 var app = express();
 
 // make connection to mongoose database
-var username = envVars.mlab_username;
-var password = envVars.mlab_password;
-mongoose.connect(`mongodb://${username}:${password}@ds127730.mlab.com:27730/sentiment_db`).then(
+var url = envVars.mlab_url;
+mongoose.connect(`${url}`).then(
   () => { console.log('mongoose connected!')},
   err => { console.log('mongoose connection error!', err) }
 );

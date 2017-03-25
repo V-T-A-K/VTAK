@@ -1,151 +1,149 @@
 <!DOCTYPE html>
-<html ng-app="sentiment.ly">
-  <head>
-    <meta charset='utf-8' />
+<html ng-app="sentimently" lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
     <title>Sentiment.ly</title>
 
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.7.3/d3.min.js"></script>d3 cdn-->
-    <link rel="stylesheet" href="main.css">
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
+
+    <!-- Custom CSS -->
+    <link href="style/css/style.css" rel="stylesheet">
+
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Baloo|Source+Sans+Pro" rel="stylesheet">
+
+    <!-- D3 -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-  </head>
-  <body ng-controller="sentimentController" class="centered">
 
-    <div>
-    <header>
-      <h1 style="color: green">Sentiment.ly</h1>
-      <h2 style="color: green">Twitter users analyzed, using the brains of</h2>
-      <img ng-src="./ibmwatson.jpg" width="300px" height="45px">
-      <hr style="width: 40%"><br>
-      <h2 style="font-style: italic; color: brown ">Analyze a Twitter handle</h2>
-      <form ng-submit="searchRequest()"> <!-- calls factory function that makes POST req w/ input value (twitter handle)  -->
-        <a style=font-weight: bold">@ &nbsp</a><input type="text" ng-model="searchRequestInput" placeholder="e.g., Journey4John" required style="height:30px; width: 300px;">
-        <input type="Submit" style="color: brown"><br><br>
-        <div ng-if="spinner">
-          <img ng-src="./spiffygif_46x46.gif">
-        </div>
-      </form>
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
 
-      <!-- Form for test Drive -->
-      <hr style="width: 20%"><br>
-      <h2 style="font-style: italic; color: brown ">Test drive a tweet</h2>
-      <form ng-submit="sampleRequest()">
-        <!-- Test drive a tweet!&nbsp -->
+    <!-- Angular scripts -->
+    <script src="app.js"></script>
+    <script src="controllers/home.js"></script>
+    <script src="controllers/render.js"></script>
+    <script src="controllers/tone.js"></script>
 
-        <input type="text" ng-model="sampleTweetInput" placeholder="e.g., Enter sample sentence text here" required style="height:30px; width: 300px; font-size:10pt;">
-        <input type="Submit" style="color: green"><br><br>
-        <div ng-if="spinner2">
-          <img ng-src="./spiffygif_46x46.gif">
-        </div>
-      </form>
+</head>
 
-    </div>
-    <hr style="width: 20%">
-  </header>
-    <div class="analysis">
-    <div class="tooltip">
-      <h2>Tweet Analysis</h2>
-      <span class="tooltiptext">IBM Watson's Tone Analyzer uses linguistic analysis to detect three types of tones in written text: emotions, social tendencies and writing style</span> </div>
-      <div ng-if="bootup">
-          <br>
-          <br>
-          <br>
-          <br>
-          <h2 class="tonesB">Emotional tone: </h2><h3 class="tonesR">Joy, Fear, Sadness, Disgust, Anger</h3><br><br>
-          <h2 class="tonesB">Language tone: </h2><h3 class="tonesR">Analytical, Confidence, Tentativeness</h3><br><br>
-          <h2 class="tonesB">Social tone: </h2><h3 class="tonesR">Openness, Conscientiousness, Extraversion, Agreeableness, Emotional Range</h3>
-      </div>
-    </div>
+<body ng-class="{home: $state.includes('home')}">
+<div id="wrapper">
+       <div class="overlay"></div>
 
-    <aside>
-         <div id="d3Display"></div>
-    </aside>
+       <!-- Sidebar -->
+       <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+           <ul class="nav sidebar-nav">
+               <li class="sidebar-brand">
+                   <a class="bar" data-toggle="offcanvas"href="#">
+                      Sentiment.ly
+                   </a>
+               </li>
+               <li>
+                   <a class="bar tab" data-toggle="offcanvas" href="#/tweet">Analyze Tweet</a>
+               </li>
+               <li>
+                   <a class="bar tab" data-toggle="offcanvas" href="#/user">Analyze Twitter User</a>
+               </li>
+               <li>
+                   <a class="bar tab" data-toggle="offcanvas" href="#/archive">User History</a>
+               </li>
+               <li>
+                   <a class="bar tab" data-toggle="offcanvas" href="#/map">Heat Map</a>
+               </li>
+               <li>
+                   <a class="bar tab" data-toggle="offcanvas" href=#/signup>Log Out</a>
+               </li>
+           </ul>
+       </nav>
+       <!-- /#sidebar-wrapper -->
 
-  <section>
-      <div ng-if="showResults" class="ng-cloak">
-        <div class = "userData"  id="profile">
-          <br><br>
-          <div>
-            <img ng-src="{{ userData.imageUrl }}" alt="Macaque in the trees" style='width:40%;' border="2" alt="Null">
-        </div>
-        <div>Name: {{ userData.name }}</div>
-        <div>Handle: @{{ userData.handle }}</div>
-        <div>Location: {{ userData.location }}</div>
-        <div>Description: {{ userData.description }}</div>
-        <div>Followers: {{userData.followers }}</div>
-        </div>
-      </div>
+       <!-- Page Content -->
+       <div id="page-content-wrapper">
+         <div class="container-fluid">
+         <div class="topbar row">
+           <div class="col-xs-1">
+             <button  type="button" class="hamburger is-closed" data-toggle="offcanvas" >
+                 <span class="hamb-top"></span>
+                 <span class="hamb-middle"></span>
+                 <span class="hamb-bottom"></span>
+             </button>
+           </div>
+           <div class="logo col-xs-10">
 
-      <div ng-if="showTestDriveGif">
-        <img ng-src="./topgear.gif" style='width:100%; height: 120%; padding-top: 80px;'>
-      </div>
-    </section>
+             <a href="#"><img class="bot" src="/img/sentimently-bot-white.png"></a>
+           </div>
+           <div class="account col-sm-1 hidden-xs">
+             <button type="button" class="accountbtn btn">Account</button>
+           </div>
+         </div>
+       </div>
+           <div class="container">
+               <div class="row">
+                   <div class="col-lg-8 col-lg-offset-2">
+                   </div>
+               </div>
+           </div>
+           <div ui-view></div>
+       </div>
+       <!-- /#page-content-wrapper -->
 
-  <br><br><br><br>
+   </div>
+   <!-- /#wrapper -->
 
-  <footer>
-    <!-- <div> -->
-    <!-- <div>
-      <br>
-      <hr style="width: 20%">
-      <h3>
-        Emotional tone
-      </h3>
-      <ul style="list-style: none">
-        <li> Joy - has shades of enjoyment, satisfaction and pleasure: {{ averageValues.Joy  }} </li>
-        <li> Fear - shows a response to impending danger: {{ averageValues.Fear  }} </li>
-        <li> Sadness - indicates a feeling of loss and disadvantage: {{ averageValues.Sadness  }} </li>
-        <li> Disgust - an emotional response of revulsion to something considered offensive or unpleasant: {{ averageValues.Disgust  }} </li>
-        <li> Anger - evoked due to injustice, conflict, humiliation, negligence or betrayal: {{ averageValues.Anger   }} </li>
-      </ul>
-      <h3>
-        Language tone
-      </h3>
-      <ul style="list-style: none">
-        <li> Analytical - reasoning and analytical attitude about things: {{ averageValues.Analytical  }} </li>
-        <li> Confidence - degree of certainty: {{ averageValues.Confident  }} </li>
-        <li> Tentative - degree of inhibition: {{ averageValues.Tentative  }} </li>
-      </ul>
-      <h3>
-        Social tone
-      </h3>
-      <ul style="list-style: none">
-        <li> Openness - open to experience a variety of activities: {{ averageValues.Openness  }} </li>
-        <li> Conscientiousness - tendency to act in an organized or thoughtful way: {{ averageValues.Conscientiousness  }} </li>
-        <li> Extraversion - tendency to seek stimulation in the company of others: {{ averageValues.Extraversion  }} </li>
-        <li> Agreeableness - tendency to be compassionate and cooperative: {{ averageValues.Agreeableness  }} </li>
-        <li> Emotional Range - extent a person's emotion is sensitive to the environment: {{ averageValues['Emotional Range']   }} </li>
-      </ul>
-   </div> -->
-<!-- </div> -->
+   <!-- javascript scripts -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-    <div style="text-align: center"> <!-- add back ng-if="showResults"  style="text-align: center" -->
-      <br>
-        <hr style="width: 20%">
-      <h2>Saved Analyses</h2>
-      <h4 style="font-style: italic">
-        <a style="color: brown">Click on an item to view results</a>
-      </h4>
-      <h4>
-        <table align="center" border="3" width="400px" bgcolor="CEEDB6">
-          <tr>
-            <th></th>
-            <th class='tableheader'>Twitter handle</th>
-            <th class='tableheader'>Time of search</th>
-          </tr>
-          <tr ng-repeat="archive in archivesData" ng-click="getSaved(archive)" class="archivelist">
-            <td> <img ng-src="{{ archive.imageUrl }}" width="60px" height="60px"></td>
-            <td> {{ archive.handle }} </td>
-            <td> {{ archive.timestamp }} </td>
-          </tr>
-        </table>
-      </h4>
-    </div>
- </footer>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
-    <script src="services/tone.js"></script>
-    <script src="services/render.js"></script>
-    <script src="app.js"></script>  <!-- Angular controller js file if separate from app.js  -->
+    <!-- Menu Toggle Script -->
+    <script>
+    $(document).ready(function () {
+      var trigger = $('.hamburger'),
+          overlay = $('.overlay'),
+         isClosed = false;
 
-  </body>
+        trigger.click(function () {
+          hamburger_cross();
+        });
+        $('.bar').click(function(){
+          overlay.hide();
+          trigger.removeClass('is-open');
+          trigger.addClass('is-closed');
+          isClosed = false;
+        })
+
+        function hamburger_cross() {
+
+          if (isClosed == true) {
+            overlay.hide();
+            trigger.removeClass('is-open');
+            trigger.addClass('is-closed');
+            isClosed = false;
+          } else {
+            overlay.show();
+            trigger.removeClass('is-closed');
+            trigger.addClass('is-open');
+            isClosed = true;
+          }
+
+      }
+
+      $('[data-toggle="offcanvas"]').click(function () {
+            $('#wrapper').toggleClass('toggled');
+      });
+    });
+    </script>
+
+</body>
+
 </html>

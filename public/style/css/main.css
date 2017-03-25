@@ -1,0 +1,185 @@
+/*Main CSS file*/
+
+
+
+
+
+/*.emotional {
+  stroke-width: 5;
+  fill: #ff7f0e;
+}
+
+.language {
+  stroke-width: 5;
+  fill: #98df8a;
+}
+
+.social {
+  stroke-width: 5;
+  fill: #ff9896;
+}*/
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+/*Set individual styles for the bars.*/
+
+.tonesB {
+  font-weight: bold;
+  display: inline;
+}
+
+.tonesR {
+  display: inline;
+}
+
+/*.bar_Anger {
+
+}
+
+.bar_Disgust {
+
+}
+
+.bar_Fear {
+
+}
+
+.bar_Joy {
+
+}
+
+.bar_Sadness {
+
+}
+
+.bar_Analytical {
+
+}
+
+.bar_Confident {
+
+}
+
+.bar_Tentative {
+
+}
+
+.bar_Openness {
+
+}
+
+.bar_Conscientiousness {
+
+}
+
+.bar_Extraversion {
+
+}
+
+.bar_Agreeableness {
+
+}
+
+.bar_Range {
+
+}*/
+
+/*.d3Tooltip {
+  color: blue;
+}*/
+
+
+/*svg .d3Ttooltip {visibility: hidden}
+svg:hover .d3Tooltip {
+    visibility: visible;
+}
+.d3Tooltip text {
+    fill: black;
+    font-size: 12px;
+    font-family: sans-serif;
+}
+.d3Tooltip rect {
+    fill: yellow;
+    stroke: blue;
+}*/
+
+/*-------------------------------------*/
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 500px;
+    font: 14px/24px "Source Code Pro", Inconsolata, "Lucida Console", Terminal, "Courier New", Courier;
+    background-color: #30C0EE;
+    color: #fff;
+    text-align: center;
+    border-radius: 12px;
+    padding: 5px 0;
+    top: 100%;
+    left: 50%;
+    margin-left: -250px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 5;
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+.nounderline{text-decoration: none}
+
+body {font: 14px/24px "Source Code Pro", Inconsolata, "Lucida Console", Terminal, "Courier New", Courier;
+  text-align: center;
+},
+  .centered {
+     width:1200px;
+     margin:0 auto;
+  },
+  .analysis {
+     text-align: center;
+  },
+code {
+  display: block;
+  font: 14px/24px "Source Code Pro", Inconsolata, "Lucida Console", Terminal, "Courier New", Courier;
+  text-align: center;
+}
+header {text-align: center},
+section,
+aside,
+footer {
+  margin: 0 1.5% 24px 1.5%;
+}
+section {
+  float: left;
+  width: 30%;
+  margin-left: 40px
+}
+aside {
+  float: right;
+  width: 65%;
+  margin-right: 10px
+}
+footer {
+  clear: both;
+  margin-bottom: 20;
+  text-align: center
+}
+
+.archivelist {
+  cursor: pointer;
+}
+
+.tableheader {
+  color: white;
+  background-color: #30C0EE;
+  padding: 10px;
+}
